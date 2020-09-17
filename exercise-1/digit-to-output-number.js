@@ -37,7 +37,7 @@ function thirdRow(digit) {
   return matchMapping(mapping, digit)
 }
 
-module.exports = function digitToRows(digit) {
+module.exports = function digitToOutputNumber(digit) {
   return [
     firstRow(digit),
     secondRow(digit),
