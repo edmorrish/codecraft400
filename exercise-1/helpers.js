@@ -1,4 +1,4 @@
-function doInSequence(functions, initialInput) {
+const doInSequence = functions => initialInput => {
   return functions.reduce(
     (previousOutput, func) => func(previousOutput)
   , initialInput)
