@@ -14,10 +14,13 @@ function printTapeAtOffset (rows, offset) {
 }
 
 function renderNumber() {
+  const [digitString, sizeString] = getInput()
+  const size = parseInt(sizeString, 10)
+
   doInSequence([
-    getInput,
+    () => digitString,
     stringToDigitList,
-    digitList => digitList.map(digitToOutputNumber),
+    digitList => digitList.map(digitToOutputNumber(sizeString)),
     joinOutputNumbers,
     joinedNumbersToRows(' '),
     loopWithInterval(100)(printTapeAtOffset)

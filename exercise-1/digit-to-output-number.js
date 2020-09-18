@@ -6,41 +6,43 @@ function matchMapping(mapping, digit) {
   }
 }
 
-function firstRow(digit) {
-  if (digit === 1 || digit === 4) {
-    return "   "
-  } else {
-    return " _ "
-  }
+function expandDisplay(display, size) {
+  const [start, middle, end] = display.split('')
+  return `${start}${middle.repeat(size)}${end}`
 }
 
-function secondRow(digit) {
-  var mapping = [
-    { display: "| |", matches: [0] },
-    { display: "  |", matches: [1, 7] },
-    { display: "|_ ", matches: [5, 6] },
-    { display: " _|", matches: [2, 3] },
-    { display: "|_|", matches: [4, 8, 9] }
-  ]
-
-  return matchMapping(mapping, digit)
+function getRow(mapping, size, digit) {
+  return expandDisplay(matchMapping(mapping, digit), size)
 }
 
-function thirdRow(digit) {
-  var mapping = [
-    { display: "|_|", matches: [0, 6, 8] },
-    { display: "|_ ", matches: [2] },
-    { display: " _|", matches: [3, 5, 9] },
-    { display: "  |", matches: [1, 4, 7] }
-  ]
+const firstRow = [
+  { display: "   ", matches: [1, 4] },
+  { display: " _ ", matches: [0, 2, 3, 5, 6, 7, 8, 9]}
+]
 
-  return matchMapping(mapping, digit)
-}
+const secondRow = [
+  { display: "| |", matches: [0] },
+  { display: "  |", matches: [1, 7] },
+  { display: "|_ ", matches: [5, 6] },
+  { display: " _|", matches: [2, 3] },
+  { display: "|_|", matches: [4, 8, 9] }
+]
 
-module.exports = function digitToOutputNumber(digit) {
+const thirdRow = [
+  { display: "|_|", matches: [0, 6, 8] },
+  { display: "|_ ", matches: [2] },
+  { display: " _|", matches: [3, 5, 9] },
+  { display: "  |", matches: [1, 4, 7] }
+]
+
+const stretchRow = (row, size) => [...Array(size - 1).keys()].map(() => row.replace(/_/g, ' '))
+
+module.exports = (size) => (digit) => {
   return [
-    firstRow(digit),
-    secondRow(digit),
-    thirdRow(digit)
+    getRow(firstRow, size, digit),
+    ...stretchRow(getRow(secondRow, size, digit), size),
+    getRow(secondRow, size, digit),
+    ...stretchRow(getRow(thirdRow, size, digit), size),
+    getRow(thirdRow, size, digit)
   ]
 }
