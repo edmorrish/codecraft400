@@ -1,16 +1,13 @@
 module.exports = function joinOutputNumbers (numbers) {
-  var firstRow = []
-  var secondRow = []
-  var thirdRow = []
+  var output = []
   for (number of numbers) {
-    firstRow.push(number[0])
-    secondRow.push(number[1])
-    thirdRow.push(number[2])
+    number.forEach((row, index) => {
+      if (!output[index]) {
+        output[index] = []
+      }
+      output[index].push(row)
+    })
   }
-  return [
-    firstRow,
-    secondRow,
-    thirdRow
-  ]
+  return output
 }
 
