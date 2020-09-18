@@ -4,6 +4,16 @@ function doInSequence(functions, initialInput) {
   , initialInput)
 }
 
+function loopWithInterval(interval) {
+  return func => loopInput => {
+    let iterationIndex = 0
+    setInterval(() => {
+      func(loopInput, iterationIndex)
+      iterationIndex += 1
+    }, interval)
+  }
+}
+
 function debugPrint(message) {
   return (input) => {
     if (process.env.DEBUG) {
@@ -15,5 +25,6 @@ function debugPrint(message) {
 
 module.exports = {
   doInSequence,
+  loopWithInterval,
   debugPrint
 }
