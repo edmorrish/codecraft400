@@ -23,8 +23,15 @@ function debugPrint(message) {
   }
 }
 
+const withClear = func => arg => { console.clear(); func(arg) }
+
+const mapObjectValues = (func) => (obj) =>
+  Object.entries(obj).reduce((acc, [key, val]) => ({...acc, [key]: func(val)}), {})
+
 module.exports = {
   doInSequence,
   loopWithInterval,
-  debugPrint
+  debugPrint,
+  mapObjectValues,
+  withClear
 }
