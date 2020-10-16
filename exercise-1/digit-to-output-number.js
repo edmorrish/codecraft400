@@ -6,15 +6,6 @@ function matchMapping(mapping, digit) {
   }
 }
 
-function expandDisplay(display, size) {
-  const [start, middle, end] = display.split('')
-  return `${start}${middle.repeat(size)}${end}`
-}
-
-function getRow(mapping, size, digit) {
-  return expandDisplay(matchMapping(mapping, digit), size)
-}
-
 const firstRow = [
   { display: "   ", matches: [1, 4] },
   { display: " _ ", matches: [0, 2, 3, 5, 6, 7, 8, 9]}
@@ -35,14 +26,8 @@ const thirdRow = [
   { display: "  |", matches: [1, 4, 7] }
 ]
 
-const stretchRow = (row, size) => [...Array(size - 1).keys()].map(() => row.replace(/_/g, ' '))
+const mappings = [ firstRow, secondRow, thirdRow ]
 
-module.exports = (size) => (digit) => {
-  return [
-    getRow(firstRow, size, digit),
-    ...stretchRow(getRow(secondRow, size, digit), size),
-    getRow(secondRow, size, digit),
-    ...stretchRow(getRow(thirdRow, size, digit), size),
-    getRow(thirdRow, size, digit)
-  ]
+module.exports = (digit) => {
+  return mappings.map(mapping => matchMapping(mapping, digit))
 }
