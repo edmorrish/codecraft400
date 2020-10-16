@@ -1,3 +1,5 @@
 module.exports = function getInput () {
-  return process.argv.slice(2)
+  const args = process.argv.slice(1)
+  const parsedSize = parseInt(args[1], 10)
+  return { numberSize: parsedSize }
 }

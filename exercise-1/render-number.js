@@ -8,8 +8,8 @@ var getTime = require('./get-time')
 var colon = require('./colon')
 var numberToString = require('./number-to-string')
 var expandOutputNumber = require('./expand-output-number')
+var getInput = require('./get-input')
 
-const numberSize = 3
 const updateInterval = 1000
 
 const numberToOutputNumberList = 
@@ -20,6 +20,8 @@ const numberToOutputNumberList =
   ])
 
 function renderNumber() {
+  const { numberSize } = getInput()
+
   loopWithInterval(updateInterval)(
     doInSequence([
       getTime,
