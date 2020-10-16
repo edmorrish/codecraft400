@@ -23,8 +23,6 @@ function debugPrint(message) {
   }
 }
 
-const map = (func) => (arr) => arr.map(func)
-
 const withClear = func => arg => { console.clear(); func(arg) }
 
 const mapObjectValues = (func) => (obj) =>
@@ -36,5 +34,4 @@ module.exports = {
   debugPrint,
   mapObjectValues,
   withClear,
-  map
 }
