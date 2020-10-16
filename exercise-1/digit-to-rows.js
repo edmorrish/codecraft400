@@ -8,6 +8,8 @@ function matchMapping(mapping, digit) {
   }
 }
 
+const verticallyStretchable = ['|']
+
 const firstRow = [
   { display: "   ", matches: [1, 4] },
   { display: " _ ", matches: [0, 2, 3, 5, 6, 7, 8, 9]},
@@ -33,6 +35,5 @@ const thirdRow = [
 
 const mappings = [ firstRow, secondRow, thirdRow ]
 
-module.exports = (size) => (digit) => 
-  expandOutputNumber(size)
-    (mappings.map(mapping => matchMapping(mapping, digit)))
+module.exports = (size) => (digit) =>
+  expandOutputNumber({ size, verticallyStretchable}, mappings.map(mapping => matchMapping(mapping, digit)))

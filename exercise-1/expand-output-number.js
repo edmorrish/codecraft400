@@ -1,21 +1,24 @@
-function expandDisplay(display, size) {
+function horizontalStretch(display, size) {
   const [start, ...rest] = display.split('')
   const end = rest.slice(-1)
   const middle = rest.slice(0, -1).join('')
   return `${start}${middle.repeat(size)}${end}`
 }
 
-const stretchRow = (row, size) => [...Array(size - 1).keys()].map(() => row.replace(/_/g, ' ').replace(/▗/g, ' '))
+const replaceExcept = (exceptions) => (string) => 
+  string.split('').map(char => exceptions.includes(char) ? char : ' ').join('')
 
-module.exports = (size) => (outputNumber) => {
+const verticalStretch = (row, size, exceptions) => [...Array(size - 1).keys()].map(() => replaceExcept(exceptions)(row))
+
+module.exports = ({ size, verticallyStretchable }, outputNumber) => {
   return outputNumber
-    .map(row => expandDisplay(row, size))
+    .map(row => horizontalStretch(row, size))
     .reduce((output, row) => (
       output.length === 0 ?
         [ row ] :
         [
           ...output, 
-          ...stretchRow(row, size),
+          ...verticalStretch(row, size, verticallyStretchable),
           row
         ]
     ), [])
