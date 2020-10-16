@@ -8,15 +8,18 @@ var getTime = require('./get-time')
 var colon = require('./colon')
 var numberToString = require('./number-to-string')
 
+const numberSize = 1
+const updateInterval = 1000
+
 const numberToOutputNumberList = 
   doInSequence([
     numberToString,
     stringToDigitList,
-    digitList => digitList.map(digitToOutputNumber(1))
+    digitList => digitList.map(digitToOutputNumber(numberSize))
   ])
 
 function renderNumber() {
-  loopWithInterval(1000)(
+  loopWithInterval(updateInterval)(
     doInSequence([
       getTime,
       mapObjectValues(numberToOutputNumberList),
