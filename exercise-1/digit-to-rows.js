@@ -1,3 +1,5 @@
+var expandOutputNumber = require('./expand-output-number')
+
 function matchMapping(mapping, digit) {
   for (possibleMatch of mapping) {
     if (possibleMatch.matches.indexOf(digit) > -1) {
@@ -31,6 +33,6 @@ const thirdRow = [
 
 const mappings = [ firstRow, secondRow, thirdRow ]
 
-module.exports = (digit) => {
-  return mappings.map(mapping => matchMapping(mapping, digit))
-}
+module.exports = (size) => (digit) => 
+  expandOutputNumber(size)
+    (mappings.map(mapping => matchMapping(mapping, digit)))
