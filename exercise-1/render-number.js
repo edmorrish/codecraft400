@@ -9,8 +9,11 @@ var colon = require('./colon')
 var numberToString = require('./number-to-string')
 var expandOutputNumber = require('./expand-output-number')
 var getInput = require('./get-input')
+var rowsToTapeRows = require('./rows-to-tape-rows')
 
-const updateInterval = 1000
+const updateInterval = 100
+const displayWidth = 120
+const clockSeparator = '        '
 
 const numberToOutputNumberList = 
   doInSequence([
@@ -22,7 +25,7 @@ const numberToOutputNumberList =
 function renderNumber() {
   const { numberSize } = getInput()
 
-  loopWithInterval(updateInterval)(
+  loopWithInterval(updateInterval)((_input, loopIndex) => {
     doInSequence([
       getTime,
       mapObjectValues(numberToOutputNumberList),
@@ -30,8 +33,10 @@ function renderNumber() {
       (outputNumbers) => outputNumbers.map(expandOutputNumber(numberSize)),
       joinOutputNumbers,
       joinedNumbersToRows(' '),
+      (rows) => rowsToTapeRows(displayWidth, clockSeparator, loopIndex, rows),
       withClear(printRows)
-    ])
+    ])()
+  }
   )()
 }
 
