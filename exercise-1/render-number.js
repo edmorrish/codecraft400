@@ -7,15 +7,16 @@ var { doInSequence, loopWithInterval, mapObjectValues, debugPrint, withClear } =
 var getTime = require('./get-time')
 var colon = require('./colon')
 var numberToString = require('./number-to-string')
+var expandOutputNumber = require('./expand-output-number')
 
-const numberSize = 1
+const numberSize = 3
 const updateInterval = 1000
 
 const numberToOutputNumberList = 
   doInSequence([
     numberToString,
     stringToDigitList,
-    digitList => digitList.map(digitToOutputNumber(numberSize))
+    digitList => digitList.map(digitToOutputNumber)
   ])
 
 function renderNumber() {
@@ -24,6 +25,7 @@ function renderNumber() {
       getTime,
       mapObjectValues(numberToOutputNumberList),
       ({hours, minutes, seconds}) => ([...hours, colon, ...minutes, colon, ...seconds]),
+      (outputNumbers) => outputNumbers.map(expandOutputNumber(numberSize)),
       joinOutputNumbers,
       joinedNumbersToRows(' '),
       withClear(printRows)
