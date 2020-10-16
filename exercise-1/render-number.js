@@ -8,6 +8,7 @@ var numberToString = require('./number-to-string')
 var expandOutputNumber = require('./expand-output-number')
 var getInput = require('./get-input')
 var rowsToTapeRows = require('./rows-to-tape-rows')
+var intersperse = require('./intersperse')
 
 const updateInterval = 100
 const displayWidth = 120
@@ -19,9 +20,11 @@ function renderNumber() {
   loopWithInterval(updateInterval)((_input, loopIndex) => {
     doInSequence([
       getTime,
-      mapObjectValues(numberToString),
-      mapObjectValues(stringToDigitList),
-      ({hours, minutes, seconds}) => ([...hours, ':', ...minutes, ':', ...seconds]),
+      ({hours, minutes, seconds}) => ([ hours, minutes, seconds ]),
+      map(numberToString),
+      map(stringToDigitList),
+      intersperse(':'),
+      (arr) => arr.flat(),
       map(digitToRows(numberSize)),
       transpose,
       map(row => row.join(' ')),
