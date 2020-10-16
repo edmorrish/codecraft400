@@ -1,4 +1,4 @@
-module.exports = function transpose (numbers) {
+module.exports = function joinOutputNumbers (numbers) {
   var output = []
   for (number of numbers) {
     number.forEach((row, index) => {

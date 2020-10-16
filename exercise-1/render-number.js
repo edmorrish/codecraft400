@@ -1,7 +1,6 @@
 var stringToDigitList = require('./string-to-digit-list')
 var digitToRows = require('./digit-to-rows')
-var joinOutputNumbers = require('./join-output-numbers')
-var joinedNumbersToRows = require('./joined-numbers-to-rows')
+var transpose = require('./transpose')
 var printRows = require('./print-rows')
 var { doInSequence, loopWithInterval, mapObjectValues, debugPrint, withClear, map } = require('./helpers')
 var getTime = require('./get-time')
@@ -24,8 +23,8 @@ function renderNumber() {
       mapObjectValues(stringToDigitList),
       ({hours, minutes, seconds}) => ([...hours, ':', ...minutes, ':', ...seconds]),
       map(digitToRows(numberSize)),
-      joinOutputNumbers,
-      joinedNumbersToRows(' '),
+      transpose,
+      map(row => row.join(' ')),
       (rows) => rowsToTapeRows(displayWidth, clockSeparator, loopIndex, rows),
       withClear(printRows)
     ])()
