@@ -1,7 +1,7 @@
-module.exports = function joinOutputNumbers (numbers) {
+module.exports = function transpose (array) {
   var output = []
-  for (number of numbers) {
-    number.forEach((row, index) => {
+  for (item of array) {
+    item.forEach((row, index) => {
       if (!output[index]) {
         output[index] = []
       }
